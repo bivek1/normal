@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  Your Order
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        Your Order
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <div class="row">
+            <div class="col-12 col-md-6 m-auto">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{message}}
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+            </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      {% for o in order  %}
+      <div class="row">
+        <main class="col-md-12">
+            <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">Order ID: {{o.id}}</strong>
+                <span>{{o.created}}</span>
+            </header>
+            <div class="card-body">
+                <div class="row"> 
+                    <div class="col-md-8">
+                        <h6 class="text-muted">Delivery to</h6>
+                        <p>{{o.first_name}} {{o.last_name}} <br>  
+                        Phone {{o.number}}<br>
+                        Location: {{o.address}}, {{o.city}} <br> 
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-muted">Payment</h6>
+                        <span class="text-success">
+                           Hand Cash
+                        </span>
+                        <p>Subtotal: {{o.get_total_cost}} <br>
+                         <span class="b">Total:  {{o.get_total_cost}} </span>
+                        </p>
+                    </div>
+                </div> <!-- row.// -->
+            </div> <!-- card-body .// -->
+            
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                  <p class='p-3'>Your Orders</p>
+                  <hr>
+                 {% for item in o.items.all %}
+                 <tr>
+                  <td width="65">
+                      <img src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" class="img-xs border" style="height: 50px;width: 50px;">
+                  </td>
+                  <td> 
+                      <p class="title mb-0">{{item.product.name}} </p>
+                      <var class="price text-muted">Rs. {{item.price}}</var>
+                  </td>
+                </tr>
+                 {% endfor %}
+                    
+            </tbody></table>
+
+            </div> <!-- table-responsive .end// -->
+            
+            </article> <!-- order-group.// --> 
+        </main>
+      </div>
+      <br>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

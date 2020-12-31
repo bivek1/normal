@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Your Shop
+        {% endblock title %}    
+    </title>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="{%static 'css/bootstrap.css' %} " rel="stylesheet" type="text/css" media="all" />
+<link href=" {%static 'css/style.css' %} " rel="stylesheet" type="text/css" media="all" />
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<!-- jQuery and JS bundle w/ Popper.js -->
+
+<!-- font-awesome icons -->
+<link href="{%static 'css/font-awesome.css' %} " rel="stylesheet" type="text/css" media="all" /> 
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="{%static 'js/jquery-1.11.1.min.js' %} "></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="{%static 'js/move-top.js' %} "></script>
+<script type="text/javascript" src="{%static 'js/easing.js' %} "></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+</head>
+<body>
+    <!-- header -->
+	<div class="agileits_header">
+		<div class='row'>
+			<div class = 'col-12 col-md-8' >
+				<div class="w3l_search">
+					<form action="search" method="GET">
+						{% csrf_token %}
+						<input type="text" name="search" placeholder="Search a product..."  required>
+						<input type="submit" value="">
+					</form>
+				</div>
+			</div>
+			<div class='col-6 col-md-2'>
+				<div class="product_list_header" style="position:relative; display:inline-block;">  
+					<input type="submit" name="submit" value="View your cart"  data-toggle="modal" data-target=".bd-example-modal-lg" class="button" />
+				</div>
+			</div>
+			<div class = 'col-6 col-md-2'>
+				<div class="w3l_header_right">
+					<ul>
+						<li class="dropdown profile_details_drop">
+							
+							{% if user.is_authenticated %}
+							
+							{% if user.user_type == 'owner' %}
+							<a href="#" class="btn btn-secondary btn-sm dropdown-toggle m-1" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> {{user}}</a>
+							{%else%}
+							<a href="#" class="btn btn-secondary btn-sm dropdown-toggle m-1" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> {{user.first_name}}</a>
+							{% endif %}
+								
+							
+							{%else%}
+							<a href="#" class="btn btn-secondary btn-sm dropdown-toggle m-1" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+							{% endif %}
+								
+							
+							<div class="mega-dropdown-menu">
+								<div class="w3ls_vegetables">
+									<ul class="dropdown-menu drp-mnu">
+										
+										{% if user.is_authenticated %}
+										{% if user.user_type == 'owner' %}
+											<li><a href="{%url 'owner:ownerDashboard'%}">Dashboard</a></li>
+											<li><a href="{%url 'owner:adminOrder'%}">Order</a></li>  
+											<li><a href="{%url 'shop:logout'%}">Logout</a></li>
+										{%else%}
+											<li><a href="{%url 'customer:dashboard'%}">Dashboard</a></li> 
+											<li><a href="{%url 'shop:logout'%}">Logout</a></li>
+										{% endif %}
+										
+										{%else%}
+										<li><a href="{%url 'shop:login'%}">Login</a></li> 
+										<li><a href="{%url 'shop:userRegister'%}">Sign Up</a></li>
+										{% endif %}
+											
+										
+									</ul>
+								</div>                  
+							</div>	
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+			  <div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Your Cart</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+				  <div class="modal-body">
+					  
+					  {% if cart %}
+					  <div class="col-12 col-md-12 m-auto">
+						<div class="row">
+						<aside class="col-lg-12">
+						<div class="card">
+						<table class="table table-borderless table-shopping-cart">
+						<thead class="text-muted">
+						<tr class="small text-uppercase">
+						  <th scope="col">Product</th>
+						  <th scope="col" width="120">Price</th>
+						  <th scope="col" class="text-right" width="200"> </th>
+						</tr>
+						</thead>
+						<tbody>
+							
+						{% for cart in cart  %}
+						<tr>
+							<td>
+								<figure class="itemside align-items-center">
+									<div class="aside"><img src="
+										{%if cart.product_name.image %}{{cart.product_name.image.url}}{%else%}{%static 'images/1.jpg'%}{%endif%}" class="img-sm" style="height: 70px; width: 70px;"></div>
+									<figcaption class="info">
+										<a href="#" class="title text-dark">{{cart.product_name.name}}</a>
+										
+									</figcaption>
+								</figure>
+							</td>
+						
+							<td> 
+								<div class="price-wrap"> 
+									<var class="price">Rs. {{cart.product_name.price}}</var> 
+								</div> <!-- price-wrap .// -->
+							</td>
+							<td class="text-right"> 
+							<a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> 
+							<a href="{%url 'customer:deleteCart' cart.id%}" class="btn btn-light"> Remove</a>
+							</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+						</table>
+						
+					
+						</div> <!-- card.// -->
+						
+					</aside> <!-- col.// -->
+							
+						
+						
+						</div>
+					</div>
+					  {%else%}
+					  <p class="text-center"> Your Cart is Empty</p>
+					  {% endif %}
+				
+						  
+				
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					
+					{% if user.is_authenticated %}
+					<a href="{%url 'customer:checkList'%}">
+						<button type="button" class="btn btn-warning"> <i class="fa fa-shopping-cart"></i> Check Out</button>
+					</a>
+					{%else%}
+						<button type="button" class="btn btn-warning disabled"> <i class="fa fa-shopping-cart"></i> Check Out</button>
+					{% endif %}
+						
+					
+					
+				  </div>
+			  </div>
+			</div>
+		</div>
+	
+	
+		<div class="clearfix"> </div>
+	</div>
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop(); 
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 
+	});
+	</script>
+<!-- //script-for sticky-nav -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="{%url 'shop:homepage'%}"><span>Our</span> Store</a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="{%url 'shop:allcategory'%}">Categories</a><i>/</i></li>
+					<li><a href="{%url 'shop:allproduct'%}">Products</a><i>/</i></li>
+					<li><a href="#">About Us</a><i>/</i></li>
+					<li><a href="#">Contact Us</a><i>/</i></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>01-4911122/9861252542</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@shop.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+{% block content %}
+  
+{% endblock content %}
+
+<!-- footer -->
+<div class="footer">
+	<div class="container">
+		
+		<div class="clearfix"> </div>
+		<div class="agile_footer_grids">
+			<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+				<div class="w3_footer_grid_bottom">
+					<h4>100% Quality products</h4>
+				</div>
+			</div>
+			<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+				<div class="w3_footer_grid_bottom">
+					<h5>connect with us</h5>
+					<ul class="agileits_social_icons">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="wthree_footer_copy">
+			<p>© 2020 Our Shop. All rights reserved | Design by <a href="http://dashpy.com/">DashPy Company</a></p>
+		</div>
+	</div>
+</div>
+<!-- //footer -->
+<script src="{%static 'js/bootstrap.min.js' %} "></script>
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
+<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+				
+			$().UItoTop({ easingType: 'easeOutQuart' });
+								
+			});
+	</script>
+<!-- //here ends scrolling icon -->
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>

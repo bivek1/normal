@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  Check Out
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        Add a Delivery Address. Place your order. 
+      </h5>
+      <hr>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-12 m-auto">
+            <div class="card">
+                <div class="card-body">
+                <h4 class="card-title mb-4">Delivery info</h4>
+            <form method="POST">
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>{{of.first_name.label_tag}}</label>
+                            {{of.first_name}}
+                            {{of.first_name.errors}}
+                    </div> <!-- form-group end.// -->
+                    <div class="col form-group">
+                        <label>{{of.last_name.label_tag}}</label>
+                        {{of.last_name}}
+                        {{of.last_name.errors}}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+            
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>{{of.number.label_tag}}</label>
+                        {{of.number}}
+                        {{of.number.errors}}
+                    </div> <!-- form-group end.// -->
+                    <div class="col form-group">
+                        <label>{{of.address.label_tag}}</label>
+                        {{of.address}}
+                        {{of.address.errors}}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+            
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>{{of.city.label_tag}}</label>
+                        {{of.city}}
+                        {{of.city.errors}}
+                    </div> <!-- form-group end.// -->
+                  
+                </div> <!-- form-row.// -->
+              
+                <div class="form-group">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-block"> Place A Order  </button>
+                </div> <!-- form-group// -->      
+                                                   
+          </form>
+                </div> <!-- card-body.// -->
+            </div> 
+        </div>
+    </div>
+
+  </div>
+  <br>
+{% endblock content %}

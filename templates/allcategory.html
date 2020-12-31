@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+  All Categories of this Shop
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        View all Categories 
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <p class="text-center" style="padding: 4px; background-color: greenyellow;">
+            {{message}}
+        </p>
+        {% endfor %}
+      {% endif %}
+     
+        <div class="row">
+            {% for c in category  %}
+            <div class="col-md-3 col-6">
+                <div class="text-center p-2">
+                    
+                    <a href="{{c.get_absolute_url}}" target="_blank" class="btn btn-success text-uppercase btn-lg shadow-sm"> {{c}}  </a>
+            
+                    </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        
+    </div>
+  </div>
+  <br>
+{% endblock content %}

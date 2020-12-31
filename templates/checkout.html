@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  Check Out
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        Review your cart and checkout
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <div class="row">
+            <div class="col-12 col-md-6 m-auto">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{message}}
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+            </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="col-12 col-md-12 m-auto">
+        <div class="row">
+        <aside class="col-lg-9">
+          <div class="card">
+          <table class="table table-borderless table-shopping-cart">
+          <thead class="text-muted">
+          <tr class="small text-uppercase">
+            <th scope="col">Product</th>
+            <th scope="col" width="120">Quantity</th>
+            <th scope="col" width="120">Price</th>
+            <th scope="col" class="text-right" width="200"> </th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for cart in cart  %}
+            <tr>
+              <td>
+                <figure class="itemside align-items-center">
+                  <div class="aside"><img src="{%if cart.product_name.image %}{{cart.product_name.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" class="img-sm" style="height: 70px; width: 70px;"></div>
+                  <figcaption class="info">
+                    <a href="#" class="title text-dark">{{cart.product_name.name}}</a>
+                    
+                  </figcaption>
+                </figure>
+              </td>
+            
+              <td> 
+                <div class="price-wrap"> 
+                  <var class="price">Rs. {{cart.product_name.price}}</var> 
+                </div> <!-- price-wrap .// -->
+              </td>
+              <td class="text-right"> 
+                <a href="{%url 'customer:deleteCart' cart.id%}" class="btn btn-light"> Remove</a>
+              </td>
+            </tr>
+            {% endfor %}
+
+        
+            </tbody>
+          </table>
+          
+          <div class="card-body border-top">
+              <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+          </div> <!-- card-body.// -->
+          
+          </div> <!-- card.// -->
+        
+        </aside> <!-- col.// -->
+        <aside class="col-lg-3">
+        
+        <div class="card mb-3">
+        <div class="card-body">
+        </div> <!-- card-body.// -->
+        </div> <!-- card.// -->
+        
+        <div class="card">
+        <div class="card-body">
+                <dl class="dlist-align">
+                  <dt>Total price:</dt>
+                  <dd class="text-right">Rs. {{total_amount}}</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Discount:</dt>
+                  <dd class="text-right text-danger">-Rs. {{discount}}</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Total:</dt>
+                  <dd class="text-right text-dark b"><strong>Rs. {{total_amount}}</strong></dd>
+                </dl>
+                <hr>
+                <a href="{%url 'customer:delivery'%}" class="btn btn-primary btn-block"> Make Purchase </a>
+                <a href="{%url 'shop:allproduct'%}" class="btn btn-light btn-block">Continue Shopping</a>
+        </div> <!-- card-body.// -->
+        </div> <!-- card.// -->
+            </aside> <!-- col.// -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+{% endblock content %}

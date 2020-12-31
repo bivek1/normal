@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  User List
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        ALl User List
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <p class="text-center" style="padding: 4px; background-color: greenyellow;">
+          {{message}}
+         </p>
+        {% endfor %}
+      {% endif %}
+
+      {% for p in use  %}
+      <div class="col-md-3 top_brand_left p-2">
+          <div class="hover14 column">
+            <div class="agile_top_brand_left_grid">
+                <div class="agile_top_brand_left_grid1">
+                    <figure>
+                        <div class="snipcart-item block" >
+                            <div class="snipcart-thumb">
+                                <p>{{p.admin.first_name}} {{p.admin.last_name}}</p>
+                                <p>Email- {{p.admin.email}}</p>
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

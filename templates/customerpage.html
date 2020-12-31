@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Customer page
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row p-2">
+        <div class=" col-12 col-md-12 text-center">
+            <h5>    {{user.first_name}}    Dashboard</h5>
+            <small>
+              You can view and manage your order and other service
+            </small>
+          </div>
+        <div class="col-6 col-md-4 p-2 addall">
+            <a href="{%url 'customer:yourorder' user.customer.id%}"> 
+            <div class="text-center p-3" style="background-color: green; color: white;" >
+             
+              <h5 class="mt-2">
+                View my Orderlist
+              </h5>
+            </div>
+            </a>
+          </div>  
+          <div class="col-6 col-md-4 p-2 addall">
+            <a href="{%url 'shop:allcategory'%}"> 
+            <div class="text-center p-3" style="background-color: red; color: white;" >
+                <h5 class="mt-2">
+                    See all Category
+                  </h5>
+            </div>
+            </a>
+          </div>  
+          <div class="col-12 col-md-4 p-2 addall">
+            <a href="{%url 'shop:allproduct'%}"> 
+            <div class="text-center p-3"  style="background-color: yellow; color:black;" >
+             
+              <h5 class="mt-2">
+                View all Products
+              </h5>
+            </div>
+            </a>
+          </div>  
+
+      </div>
+</div>
+{%endblock content%}

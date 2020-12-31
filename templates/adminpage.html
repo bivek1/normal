@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Admin page
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  
+    {% if order %}
+    <div class="text-center">
+        <h5>Recent Order</h5>
+        <small>
+          Manage your recent order
+        </small>
+      </div>
+      <br>
+      {% for o in order  %}
+      <div class="row">
+        <main class="col-md-12">
+            <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">Order ID: {{o.id}}</strong>
+                <span>{{o.created}}</span> 
+                <a href="{%url 'owner:sent_order' o.id%}">
+                <button class='btn btn-warning'>
+                    Add to Sent & Complete 
+                </button>
+                </a>
+            </header>
+            <div class="card-body">
+                <div class="row"> 
+                    <div class="col-md-8">
+                        <h6 class="text-muted">Delivery to</h6>
+                        <p>{{o.first_name}} {{o.last_name}} <br>  
+                        Phone {{o.number}}<br>
+                        Location: {{o.address}}, {{o.city}} <br> 
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-muted">Payment</h6>
+                        <span class="text-success">
+                           Hand Cash
+                        </span>
+                        <p>Subtotal: {{o.get_total_cost}} <br>
+                         <span class="b">Total:  {{o.get_total_cost}} </span>
+                        </p>
+                    </div>
+                </div> <!-- row.// -->
+            </div> <!-- card-body .// -->
+            
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                  <p class='p-3'>Your Orders</p>
+                  <hr>
+                 {% for item in o.items.all %}
+                 <tr>
+                  <td width="65">
+                      <img src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" class="img-xs border" style="height: 50px;width: 50px;">
+                  </td>
+                  <td> 
+                      <p class="title mb-0">{{item.product.name}} </p>
+                      <var class="price text-muted">Rs. {{item.price}}</var>
+                  </td>
+                </tr>
+                 {% endfor %}
+                    
+            </tbody></table>
+
+            </div> <!-- table-responsive .end// -->
+            
+            </article> <!-- order-group.// --> 
+        </main>
+      </div>
+      <br>
+      {% endfor %}
+
+        
+    {% endif %}
+      <hr>
+      <div class="row p-2">
+        <div class=" col-12 col-md-12 text-center">
+            <h5>    Add     </h5>
+            <small>
+              You can add and manage your user, products and services
+            </small>
+          </div>
+        <div class="col-6 col-md-3 p-2 addall">
+            <a href="{%url 'owner:add_category'%}"> 
+            <div class="text-center p-3" style="background-color: green; color: white;" >
+             
+              <h5 class="mt-2">
+                Add Category
+              </h5>
+            </div>
+            </a>
+          </div>  
+          <div class="col-6 col-md-3 p-2 addall">
+            <a href="{%url 'owner:add_sub_cat'%}"> 
+            <div class="text-center p-3" style="background-color: red; color: white;" >
+                <h5 class="mt-2">
+                    Add Sub Category
+                  </h5>
+            </div>
+            </a>
+          </div>  
+          <div class="col-6 col-md-3 p-2 addall">
+            <a href="{%url 'owner:add_product'%}"> 
+            <div class="text-center p-3"  style="background-color: yellow; color:black;" >
+             
+              <h5 class="mt-2">
+                Add Products
+              </h5>
+            </div>
+            </a>
+          </div>  
+    
+          <div class="col-6 col-md-3 p-2 addall">
+            <a href="{%url 'owner:user_list'%}"> 
+            <div class="text-center p-3" style="background-color: skyblue; color: white;" >
+            
+              <h5 class="mt-2">
+                View Users
+              </h5>
+            </div>
+            </a>
+          </div>  
+    
+      </div>
+
+</div>
+{%endblock content%}

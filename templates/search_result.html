@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  {{ans}}
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        Search Result of {{ans}}
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <p class="text-center" style="padding: 4px; background-color: greenyellow;">
+          {{message}}
+         </p>
+        {% endfor %}
+      {% endif %}
+         
+         {% if product %}
+         {% for p in product  %}
+         <div class="col-md-3 top_brand_left p-2">
+           <a href="{%url 'shop:specific' p.slug%}">
+             <div class="hover14 column">
+               <div class="agile_top_brand_left_grid">
+                   <div class="agile_top_brand_left_grid1">
+                       <figure>
+                           <div class="snipcart-item block" >
+                               <div class="snipcart-thumb">
+                                   <a href="{%url 'shop:product_details' p.id p.slug%}"><img title=" " alt=" " src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}"  style="height: 100%; width: 100%;"/></a>		
+                                   <p>{{p.name}}</p>
+                                   <h4>Rs. {{p.price}}</h4>
+                               </div>
+                           </div>
+                       </figure>
+                   </div>
+                   <div class="snipcart-details top_brand_home_details">
+                       <a href="{%url 'customer:addtocart' p.id%}">
+                           <input type="submit" name="submit" value="Add to cart" class="button" />
+                       </a>
+                
+                   </div>
+               </div>
+           </div>
+           </a>
+           
+         </div>
+         {% endfor %}
+         {%else%}
+         <div class='text-center'>
+            <p>Sorry No result Found</p>
+         </div>
+         {% endif %}
+             
+
+    </div>
+  </div>
+{% endblock content %}

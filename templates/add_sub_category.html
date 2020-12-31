@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}
+  Add Sub Category
+{% endblock title %}
+{% block loader %}
+  
+{% endblock loader %}
+{% block content %}
+  <div class="container">
+    <div class="text-center">
+      <h5>
+        Add Sub Category
+      </h5>
+      <hr>
+      <small>
+        Add Your Sub Category, that will be presented as a shutter for your Shop
+      </small>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+       <p class="text-center" style="padding: 4px; background-color: greenyellow;">
+        {{message}}
+       </p>
+        
+        {% endfor %}
+      {% endif %}
+      <form action="" method="post" enctype="multipart/form-data">
+        <div class="form-group col-6 m-auto p-2" style="background-color:white ;">
+          {% for field in form  %}
+          <div class="col p-2">
+            {{field.label_tag}}
+            {{field}}
+            {{field.errors}}
+          </div>
+    
+          {% endfor %}
+            
+          {% csrf_token %}
+          <br>
+          <input class= "btn btn-secondary btn-block" type="submit", value="Add Sub Category">
+        </div>
+      </form>
+        
+    </div>
+  </div>
+{% endblock content %}

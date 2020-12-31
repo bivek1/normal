@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Your Shop! Best Online Shopping
+{% endblock title %}
+
+{% block content %}
+
+<!-- banner -->
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+			<nav class="navbar nav_bottom">
+			 <!-- Brand and toggle get grouped for better mobile display -->
+			  <div class="navbar-header nav_2">
+				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+			   </div> 
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<h6 class="text-center">Categories</h6>
+					<ul class="nav navbar-nav nav_1">
+						<li><a href="{%url 'shop:allcategory'%}">All</a></li>	
+						{% for c in cat  %}
+						<li><a href="{{c.get_absolute_url}}">{{c}}</a></li>	
+						{% endfor %}
+					</ul>
+				 </div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="w3l_banner_nav_right">
+			<div class="card card-body">
+				<h6 class="btn btn-warning">Our Latest Products</h6>
+				<br>
+				<div class="row">
+
+					{% for p in fixed_product  %}
+					
+					<div class="col-md-3 col-12 top_brand_left">
+						<div class="hover14 column">
+							<div class="agile_top_brand_left_grid">
+								<div class="agile_top_brand_left_grid1">
+									<figure>
+										<div class="snipcart-item block" >
+											<div class="snipcart-thumb">
+												<a href="{%url 'shop:product_details' p.id p.slug%}"><img title=" " alt=" " src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" style="height: 200px; width: 100%;"/></a>		
+												<p>{{p.name}}</p>
+												<h4>Price- {{p.price}}</h4>
+											</div>
+											<div class="snipcart-details top_brand_home_details">
+												<a href="{%url 'customer:addtocart' p.id%}">
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</a>
+											</div>
+										</div>
+									</figure>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					
+				</div> <!-- row.// -->
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+<!-- banner -->
+
+<!-- top-brands -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Top Products</h3>
+			<div class="agile_top_brands_grids">
+				<div class="row">
+					{% for p in product  %}
+					<div class="col-md-3 col-6">
+						<figure class="card card-product-grid">
+							<div class="img-wrap"> 
+								<a href="{%url 'shop:product_details' p.id p.slug%}">
+									<img src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" style="height: 200px; width: 100%;"> </div>
+								</a>
+								
+							<figcaption class="info-wrap border-top">
+								<a href="{%url 'shop:product_details' p.id p.slug%}" class="title p-2 text-capitalize" style="color: black;">{{p.name}}</a>
+								<div class="price mt-2 pl-2"> <b>Rs.{{p.price}}</b> </div> <!-- price-wrap.// -->
+								<div class="snipcart-details top_brand_home_details mb-4">
+									<a href="{%url 'customer:addtocart' p.id%}">
+										<input type="submit" name="submit" value="Add to cart" class="button" />
+									</a>
+								</div>
+							</figcaption>
+							
+						</figure> <!-- card // -->
+					</div>
+					{% endfor %}
+				</div>
+				
+				<div class="clearfix"> </div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-5 col-8 m-auto">
+					<div class="text-center">
+						<a class="btn btn-warning btn-block" href="{%url 'shop:allproduct'%}">
+							See all Products
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>sign up for our newsletter</h3>
+			</div>
+			<div class="w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+					<input type="submit" value="subscribe now">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //newsletter -->
+
+{% endblock content %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Product
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+      <h5>
+        Add Products
+      </h5>
+      <hr>
+    </div>
+    {% if messages%}
+        {% for message in messages %}
+        <div class="row">
+            <div class="col-6 m-auto" style= "background-color:crimson; padding: 2px; color: white;">
+                <p class="text-center">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+       
+        {% endfor %}
+      {% endif %}
+      <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-12">
+                <b>{{form.name.label_tag}} </b>
+                    {{form.name}}
+                    {{form.name.errors}}
+              </div>
+              <div class="col">
+                <b>{{form.category.label_tag}} </b>
+                {{form.category}}
+                {{form.category.errors}}
+              </div>
+              <div class="col">
+                <b>{{form.sub_category.label_tag}} </b>
+                {{form.sub_category}}
+                {{form.sub_category.errors}}
+              </div>
+              <div class="col-12">
+                <b>{{form.price.label_tag}} </b>
+                {{form.price}}
+                {{form.price.errors}}
+              </div>
+              <div class="col-2">
+                <b>{{form.available.label_tag}} </b>
+              </div>
+              <div class="col-10">
+                {{form.available}}
+              </div>
+             
+              <div class="col-12">
+                <b>{{form.description.label_tag}} </b>
+                {{form.description}}
+                {{form.description.errors}}
+              </div>
+              <div class="col-12">
+                <b>{{form.image.label_tag}} </b>
+                {{form.image}}
+                {{form.image.errors}}
+              </div>
+            </div>
+
+          {% csrf_token %}
+          <br>
+          <input class= "btn btn-secondary btn-block" type="submit", value="Add Product">
+
+      </form>
+        
+    </div>
+  </div>
+  <br>
+{% endblock content %}
+    

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Register
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <form action="" method="post">
+        <div class="row m-auto">
+            <div class="col-md-6 col-12 m-auto" style="background-color: white;">
+                <div class="text-center">
+                    <h5>
+                        SIGN UP 
+                    </h5>
+                </div>
+                <hr>
+                <div class="form-row p-2" style="background-color: white;">
+                    <div class="form-group col-md-6 col-6">
+                        {{form.first_name.label_tag}}
+                        {{form.first_name}}
+                        {{form.first_name.errors}}
+                    </div>
+                    <div class="form-group col-md-6 col-6">
+                        {{form.last_name.label_tag}}
+                        {{form.last_name}}
+                        {{form.last_name.errors}}
+                    </div>
+                    <div class="form-group col-md-12 col-12">
+                        {{form.email.label_tag}}
+                        {{form.email}}
+                        {{form.email.errors}}
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        {{form.password.label_tag}}
+                        {{form.password}}
+                        {{form.password.errors}}
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        {{form.re_password.label_tag}}
+                        {{form.re_password}}
+                        {{form.re_password.errors}}
+                    </div>
+                
+                    {% csrf_token %}
+                    <button class="btn btn-primary col-6 m-auto" type="submit">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{%endblock content%}
