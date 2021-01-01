@@ -39,28 +39,24 @@
 				<div class="row">
 
 					{% for p in fixed_product  %}
-					
-					<div class="col-md-3 col-12 top_brand_left">
-						<div class="hover14 column">
-							<div class="agile_top_brand_left_grid">
-								<div class="agile_top_brand_left_grid1">
-									<figure>
-										<div class="snipcart-item block" >
-											<div class="snipcart-thumb">
-												<a href="{%url 'shop:product_details' p.id p.slug%}"><img title=" " alt=" " src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" style="height: 200px; width: 100%;"/></a>		
-												<p>{{p.name}}</p>
-												<h4>Price- {{p.price}}</h4>
-											</div>
-											<div class="snipcart-details top_brand_home_details">
-												<a href="{%url 'customer:addtocart' p.id%}">
-													<input type="submit" name="submit" value="Add to cart" class="button" />
-												</a>
-											</div>
-										</div>
-									</figure>
+					<div class="col-md-3 col-6">
+						<figure class="card card-product-grid">
+							<div class="img-wrap"> 
+								<a href="{%url 'shop:product_details' p.id p.slug%}">
+									<img src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" style="height: 200px; width: 100%;"> </div>
+								</a>
+								
+							<figcaption class="info-wrap border-top">
+								<a href="{%url 'shop:product_details' p.id p.slug%}" class="title p-2 text-capitalize" style="color: black;">{{p.name}}</a>
+								<div class="price mt-2 pl-2"> <b>Rs.{{p.price}}</b> </div> <!-- price-wrap.// -->
+								<div class="snipcart-details top_brand_home_details mb-4">
+									<a href="{%url 'customer:addtocart' p.id%}">
+										<input type="submit" name="submit" value="Add to cart" class="button" />
+									</a>
 								</div>
-							</div>
-						</div>
+							</figcaption>
+							
+						</figure> <!-- card // -->
 					</div>
 					{% endfor %}
 					
@@ -84,7 +80,6 @@
 								<a href="{%url 'shop:product_details' p.id p.slug%}">
 									<img src="{%if p.image %}{{p.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" style="height: 200px; width: 100%;"> </div>
 								</a>
-								
 							<figcaption class="info-wrap border-top">
 								<a href="{%url 'shop:product_details' p.id p.slug%}" class="title p-2 text-capitalize" style="color: black;">{{p.name}}</a>
 								<div class="price mt-2 pl-2"> <b>Rs.{{p.price}}</b> </div> <!-- price-wrap.// -->
