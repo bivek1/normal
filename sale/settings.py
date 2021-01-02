@@ -137,4 +137,4 @@ AUTH_USER_MODEL = 'owner.CustomUser'
 AUTHENTICATION_BACKENDS = ['owner.EmailBackEnd.EmailBackEnd']
 
 
-LOGIN_URL = 'customer:login'
+LOGIN_URL = 'shop:login'
