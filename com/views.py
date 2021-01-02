@@ -70,7 +70,6 @@ def delivery(request):
         'cart':cart
     }
     if form.is_valid():
-        form = OrderCreateForm(request.POST)
         cd = form.cleaned_data
         first_name = cd['first_name']
         last_name = cd['last_name']
