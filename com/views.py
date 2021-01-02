@@ -63,34 +63,30 @@ def deleteCart(request, cart_id):
 
 
 def delivery(request):
-    orderF = OrderCreateForm()
+    form = OrderCreateForm(request.POST or None)
     cart = Cart.objects.filter(cart_of = request.user)
     dist = {
-        'of': orderF,
+        'of': form,
         'cart':cart
     }
-    if request.method == 'POST':
-        return HttpResponse('Good')
-        # orderF = OrderCreateForm(request.POST)
-        # if orderF.is_valid():
-        #     orderF = OrderCreateForm(request.POST)
-        #     cd = orderF.cleaned_data
-        #     first_name = cd['first_name']
-        #     last_name = cd['last_name']
-        #     number = cd['number']
-        #     address = cd['address']
-        #     city = cd['city']
-        #     order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
-        #     order.save()
-        #     for item in cart:
-        #         order_item = OrderItem(order = order, product = item.product_name, price = item.product_name.price)
-        #         order_item.save()
-        #     cart.delete()  
-        #     return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
-        # else:
-        #     return render(request, 'orderpage.html', dist )
+    if form.is_valid():
+        form = OrderCreateForm(request.POST)
+        cd = form.cleaned_data
+        first_name = cd['first_name']
+        last_name = cd['last_name']
+        number = cd['number']
+        address = cd['address']
+        city = cd['city']
+        order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
+        order.save()
+        for item in cart:
+            order_item = OrderItem(order = order, product = item.product_name, price = item.product_name.price)
+            order_item.save()
+        cart.delete()  
+        return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
     else:
         return render(request, 'orderpage.html', dist )
+    
   
 
         
