@@ -66,7 +66,7 @@
                  {% for item in o.items.all %}
                  <tr>
                   <td width="65">
-                      <img src="{%if item.image %}{{item.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" class="img-xs border" style="height: 50px;width: 50px;">
+                      <img src="{%if item.product.image %}{{item.product.image.url}} {%else%} {%static 'images/1.jpg'%} {%endif%}" class="img-xs border" style="height: 50px;width: 50px;">
                   </td>
                   <td> 
                       <p class="title mb-0">{{item.product.name}} </p>
