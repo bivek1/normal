@@ -107,7 +107,7 @@ class Order(models.Model):
     first_name = models.CharField(max_length=50, blank = True)
     last_name = models.CharField(max_length=50)
     order_by = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
-    number = models.IntegerField()
+    number = models.BigIntegerField()
     address = models.CharField(max_length=250)
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
