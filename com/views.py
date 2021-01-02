@@ -69,43 +69,16 @@ def delivery(request):
         'of': orderF,
         'cart':cart
     }
-    # if request.method == 'POST':
-    #     orderF = OrderCreateForm(request.POST)
-    #     if orderF.is_valid():
-    #         first_name = request.POST['first_name']
-    #         last_name = request.POST['last_name']
-    #         number = request.POST['number']
-    #         address = request.POST['address']
-    #         city = request.POST['city']
-    #         order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
-    #         order.save()
-    #         for item in cart:
-    #             order_item = OrderItem(order = order, product = item.product_name, price = item.product_name.price)
-    #             order_item.save()
-    #         cart.delete()  
-    #         return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
-    #     else:
-    #         return render(request, 'orderpage.html', dist )
-    # else:
-    return render(request, 'orderpage.html', dist )
-  
- 
-def addorder(request):
-    if request.method != 'POST':
-        return HttpResponse("<h1>Method not allowed</h1>")
-    else:
+    if request.method == 'POST':
         orderF = OrderCreateForm(request.POST)
-        cart = Cart.objects.filter(cart_of = request.user)
-        dist = {
-            'of': orderF,
-            'cart':cart
-        }
         if orderF.is_valid():
-            first_name = orderF.cleaned_data['first_name']
-            last_name = orderF.cleaned_data['last_name']
-            number = orderF.cleaned_data['number']
-            address = orderF.cleaned_data['address']
-            city = orderF.cleaned_data['city']
+            orderF = OrderCreateForm(request.POST)
+            cd = orderF.cleaned_data
+            first_name = cd['first_name']
+            last_name = cd['last_name']
+            number = cd['number']
+            address = cd['address']
+            city = cd['city']
             order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
             order.save()
             for item in cart:
@@ -115,6 +88,10 @@ def addorder(request):
             return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
         else:
             return render(request, 'orderpage.html', dist )
+    else:
+        return render(request, 'orderpage.html', dist )
+  
+
         
 
 def yourorder(request, id):
