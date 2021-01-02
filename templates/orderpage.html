@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                 <h4 class="card-title mb-4">Delivery info</h4>
-            <form action="" method="post">
+            <form>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>{{of.first_name.label_tag}}</label>
@@ -57,11 +57,14 @@
               
                 <div class="form-group">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary btn-block"> Place A Order  </button>
+                    <a href="{%url 'shop:homepage'%}">
+                        <button type="submit" class="btn btn-primary btn-block"> Place A Order  </button>
+                    </a>
+                    
                 </div> <!-- form-group// -->      
                                                    
           </form>
-                </div> <!-- card-body.// -->
+            </div> <!-- card-body.// -->
             </div> 
         </div>
     </div>
