@@ -70,24 +70,25 @@ def delivery(request):
         'cart':cart
     }
     if request.method == 'POST':
-        orderF = OrderCreateForm(request.POST)
-        if orderF.is_valid():
-            orderF = OrderCreateForm(request.POST)
-            cd = orderF.cleaned_data
-            first_name = cd['first_name']
-            last_name = cd['last_name']
-            number = cd['number']
-            address = cd['address']
-            city = cd['city']
-            order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
-            order.save()
-            for item in cart:
-                order_item = OrderItem(order = order, product = item.product_name, price = item.product_name.price)
-                order_item.save()
-            cart.delete()  
-            return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
-        else:
-            return render(request, 'orderpage.html', dist )
+        return HttpResponse('Good')
+        # orderF = OrderCreateForm(request.POST)
+        # if orderF.is_valid():
+        #     orderF = OrderCreateForm(request.POST)
+        #     cd = orderF.cleaned_data
+        #     first_name = cd['first_name']
+        #     last_name = cd['last_name']
+        #     number = cd['number']
+        #     address = cd['address']
+        #     city = cd['city']
+        #     order = Order(first_name = first_name, last_name=last_name, number = number, address = address, city = city, order_by = request.user)
+        #     order.save()
+        #     for item in cart:
+        #         order_item = OrderItem(order = order, product = item.product_name, price = item.product_name.price)
+        #         order_item.save()
+        #     cart.delete()  
+        #     return HttpResponseRedirect(reverse('customer:yourorder', kwargs={'id':request.user.id}))
+        # else:
+        #     return render(request, 'orderpage.html', dist )
     else:
         return render(request, 'orderpage.html', dist )
   
