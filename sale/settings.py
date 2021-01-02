@@ -51,7 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'sale.LoginCheckMiddleware.LoginCheckMiddleWare',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'sale.LoginCheckMiddleware.LoginCheckMiddleWare',
 ]
 
 ROOT_URLCONF = 'sale.urls'
@@ -138,3 +139,5 @@ AUTHENTICATION_BACKENDS = ['owner.EmailBackEnd.EmailBackEnd']
 
 
 LOGIN_URL = 'shop:login'
+
+SESSION_COOKIE_DOMAIN = "139.59.30.26"
